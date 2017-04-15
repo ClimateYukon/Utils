@@ -12,7 +12,7 @@ bash Miniconda2-latest-Linux-x86_64.sh #Answer Yes to every questions, it will c
 conda create --name ALFPP --file ALF.txt
 
 #or if on atlas you can find it there :
-#conda create --name ALFPP --file /workspace/Shared/Users/jschroder/Github/utils/ALF.txt
+#conda create --name ALFPP --file /workspace/Shared/Users/jschroder/Github/Utils/ALF.txt
 
 #to activate it :
 source ALFPP/bin/activate
