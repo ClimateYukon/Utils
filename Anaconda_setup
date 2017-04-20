@@ -18,4 +18,4 @@ conda create --name ALFPP --file ALF.txt
 source miniconda2/envs/ALFPP/bin/activate
 
 #install the Alfresco Post processing package (see package github for this step)
-pip git+git://github.com/ua-snap/alfresco_postprocessing.git
+pip install git+git://github.com/ua-snap/alfresco_postprocessing.git
