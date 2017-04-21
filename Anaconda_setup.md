@@ -1,17 +1,15 @@
-# How to install an environment with all the requirements to run ALFRESCO post processing package :
+###ALFRESCO post processing quick install
+## ANACONDA3
+Anaconda comes with a lot of useful packages pre installed to install :
 
-########################################################################################################################
-########################################################################################################################
-#############################################    Anaconda 3   ##########################################################
-########################################################################################################################
-########################################################################################################################
+
 
 #download the last anaconda package for the last python 3 :
-wget https://repo.continuum.io/archive/Anaconda3-4.3.1-Linux-x86_64.sh
+`wget https://repo.continuum.io/archive/Anaconda3-4.3.1-Linux-x86_64.sh`
 
 #install the python 3 version of Anaconda, there is still possibility to set up py27 environment easily after that
 #Answer Yes to every questions, it will create a base repository name anaconda3
-bash Anaconda3-4.3.1-Linux-x86_64.sh 
+`bash Anaconda3-4.3.1-Linux-x86_64.sh`
 
 #Refresh the bashrc so conda command are recognized
 source ~/.bashrc 
