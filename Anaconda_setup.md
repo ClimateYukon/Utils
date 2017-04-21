@@ -1,8 +1,7 @@
-# ALFRESCO post processing quick install
+# ALFRESCO post processing quick Python environment install
 ## Anaconda 3
 
-Anaconda comes with a lot of useful packages pre installed to install :
-
+Anaconda 3 installs a lot of useful packages by default in the main environment
 
 
 1. Download the last anaconda package for the last python 3 :
@@ -30,6 +29,8 @@ Answer Yes to every questions, it will create a base repository name anaconda3
 6. Install the Alfresco Post processing package
 
 `pip install git+git://github.com/ua-snap/alfresco_postprocessing.git`
+
+
 
 ## Miniconda 3
 
