@@ -1,6 +1,6 @@
 # How to install python 2.7 with all the requirements to run ALFRESCO post processing package :
 
-#download the last anaconda package for the last python 2 :
+#download the last anaconda package for the last python 3 :
 #miniconda is more appropriate for ALFRESCO post processing as it just ships with the basic packages
 wget https://repo.continuum.io/archive/Anaconda3-4.3.1-Linux-x86_64.sh
 
