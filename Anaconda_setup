@@ -2,20 +2,20 @@
 
 #download the last anaconda package for the last python 2 :
 #miniconda is more appropriate for ALFRESCO post processing as it just ships with the basic packages
-wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
+wget https://repo.continuum.io/archive/Anaconda3-4.3.1-Linux-x86_64.sh
 
 #install it
-bash Miniconda2-latest-Linux-x86_64.sh #Answer Yes to every questions, it will create a base repository name miniconda2
-
+bash Anaconda3-4.3.1-Linux-x86_64.sh #Answer Yes to every questions, it will create a base repository name miniconda2
+source ~/.bashrc
 
 #Create a new virtualenvironment through conda with all the package required by ALF-PP
-conda create --name ALFPP --file ALF.txt
+conda create --name ALFPP27 python=2.7 --file ALF.txt
 
 #or if on atlas you can find it there :
-#conda create --name ALFPP --file /workspace/Shared/Users/jschroder/Github/Utils/ALF.txt
+#conda create --name ALFPP27 python=2.7 --file /workspace/Shared/Users/jschroder/Github/Utils/ALF.txt
 
 #to activate it :
-source miniconda2/envs/ALFPP/bin/activate
+source activate ALFPP27
 
 #install the Alfresco Post processing package (see package github for this step)
 pip install git+git://github.com/ua-snap/alfresco_postprocessing.git
