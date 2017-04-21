@@ -11,14 +11,23 @@ bash Anaconda3-4.3.1-Linux-x86_64.sh
 #Refresh the bashrc so conda command are recognized
 source ~/.bashrc 
 
-#Create a new virtualenvironment through conda with all the packages required by ALF-PP
-conda create --name ALFPP27 python=2.7 --file ALF.txt
-
-#or if on atlas you can find it there :
-#conda create --name ALFPP27 python=2.7 --file /workspace/Shared/Users/jschroder/Github/Utils/ALF.txt
+#Create a new virtualenvironment through conda just asking it to install ipython for debugging
+conda create --name ALFPP27 python=2.7 ipython
 
 #to activate it :
 source activate ALFPP27
 
 #install the Alfresco Post processing package (see package github for this step)
 pip install git+git://github.com/ua-snap/alfresco_postprocessing.git
+
+
+
+
+
+
+
+
+
+
+#Keep that in case the setup.py from alfpp is missing some package :
+#conda create --name ALFPP27 python=2.7 --file /workspace/Shared/Users/jschroder/Github/Utils/ALF.txt
