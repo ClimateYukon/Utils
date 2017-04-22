@@ -1,5 +1,5 @@
 # ALFRESCO post processing quick Python environment install
-The following describes how to easily set up a python 2.7 environment on a server/mac to use [ALFRESCO post processing](https://github.com/ua-snap/alfresco_postprocessing)
+The following describes how to easily set up a python 2.7 environment on a Linux server to use [ALFRESCO post processing](https://github.com/ua-snap/alfresco_postprocessing)
 ## Anaconda 3
 
 Anaconda 3 installs a lot of useful packages by default in the main environment
