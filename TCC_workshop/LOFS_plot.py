@@ -59,9 +59,11 @@ for scen in scenarios :
     # set individual bar lables using above list
     for i in ax.patches:
      # get_x pulls left or right; get_height pushes up or down
-     ax.text(i.get_x()+.08, i.get_height()-8, \
-             str(round(i.get_height(), 0)),
+     ax.text(i.get_x()+.13, i.get_height()-8, \
+             str(round(i.get_height())),
                  color='black')
+    plt.xticks(rotation=0)
+
     plt.ylabel('Length of Frozen Season (Days)')
     plt.title('Length of Frozen Season in the Yukon Flats Area,\n  CMIP5 - 5 Model Average - {}'.format(scen.upper()))
     # plt.show()
