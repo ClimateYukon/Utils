@@ -62,9 +62,8 @@ for scen in scenarios :
      ax.text(i.get_x()+.08, i.get_height()-8, \
              str(round(i.get_height(), 0)),
                  color='black')
-    plt.ylabel('Length of Freezing Season (Days)')
-    plt.xlabel('Decades')
-    plt.title('Length of Freezing Season in the Yukon Flats Area,\n  CMIP5 - 5 Model Average - {}'.format(scen.upper()))
+    plt.ylabel('Length of Frozen Season (Days)')
+    plt.title('Length of Frozen Season in the Yukon Flats Area,\n  CMIP5 - 5 Model Average - {}'.format(scen.upper()))
     # plt.show()
 
     filename = os.path.join(pth_YK,"Plots", '_'.join(['lofs',scen,'plot']) + '.png')
