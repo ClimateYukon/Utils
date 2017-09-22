@@ -10,14 +10,14 @@ import glob
 
 rcParams[ 'xtick.direction' ] = 'out'
 rcParams[ 'ytick.direction' ] = 'out'
-rcParams[ 'xtick.labelsize' ] = 'medium'
-rcParams[ 'ytick.labelsize' ] = 'medium'
-rcParams[ 'figure.titlesize' ] = 'large'
+rcParams[ 'xtick.labelsize' ] = 'X-large'
+rcParams[ 'ytick.labelsize' ] = 'X-large'
+rcParams[ 'figure.titlesize' ] = 'X-large'
 rcParams[ 'axes.titlesize' ] = 'large'
 rcParams[ 'axes.spines.top' ] = 'False'
 rcParams[ 'axes.spines.right' ] = 'False'
-rcParams[ 'savefig.dpi' ] = 300
-rcParams[ 'figure.figsize'] = 14 , 8
+rcParams[ 'savefig.dpi' ] = 1000
+rcParams[ 'figure.figsize'] = 12 , 8
 
 
 pth_YK = '/workspace/Shared/Users/jschroder/Yukon-Flats_workshop/LOFS_YK-FLATS/'
@@ -46,7 +46,8 @@ for scen in scenarios :
 
     df.columns = ["LOFS"]
     ax = df.plot(kind='bar', legend=False)
-                                                           
+
+    #stolen from http://robertmitchellv.com/blog-bar-chart-annotations-pandas-mpl.html                                                       
     totals = []
 
     # find the values and append to list
@@ -59,15 +60,15 @@ for scen in scenarios :
     # set individual bar lables using above list
     for i in ax.patches:
      # get_x pulls left or right; get_height pushes up or down
-     ax.text(i.get_x()+.13, i.get_height()-8, \
+     ax.text(i.get_x()+.05, i.get_height()-8, \
              str(round(i.get_height())),
-                 color='black')
+                 color='black',fontsize=16)
     plt.xticks(rotation=0)
 
-    plt.ylabel('Length of Frozen Season (Days)')
-    plt.title('Length of Frozen Season in the Yukon Flats Area,\n  CMIP5 - 5 Model Average - {}'.format(scen.upper()))
+    plt.ylabel('Length of Frozen Season (Days)',fontsize=17)
+    # plt.title('Length of Frozen Season in the Yukon Flats Area,\n  CMIP5 - 5 Model Average - {}'.format(scen.upper()))
     # plt.show()
 
-    filename = os.path.join(pth_YK,"Plots", '_'.join(['lofs',scen,'plot']) + '.png')
+    filename = os.path.join(pth_YK,"Plots", '_'.join(['lofs',scen,'plot','no_title']) + '.pdf')
     plt.savefig( filename )
     plt.close()
