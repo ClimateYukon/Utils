@@ -76,8 +76,12 @@ for scen in scenarios :
         ax_f.bar(y_pos,value)
 
         #labels
-        ax_f.set_ylabel( 'Ground Surface Temperature ($^\circ$C)',fontsize=15 )
-        ax_c.set_ylabel( 'Ground Surface Temperature ($^\circ$F)',fontsize=15 )
+        if metric == 'MAGT':
+            ax_f.set_ylabel( 'Ground Temperature at 1m Depth ($^\circ$C)',fontsize=15 )
+            ax_c.set_ylabel( 'Ground Temperature at 1m Depth ($^\circ$F)',fontsize=15 )
+        elif metric == 'MAGST':
+            ax_f.set_ylabel( 'Ground Surface Temperature ($^\circ$C)',fontsize=15 )
+            ax_c.set_ylabel( 'Ground Surface Temperature ($^\circ$F)',fontsize=15 )
 
         #set tick lavel for x
         ax_f.set_xticks(y_pos)
@@ -91,7 +95,7 @@ for scen in scenarios :
         ax_f.set_ylim(ymin,math.ceil(ymax))
 
         plt.show()
-        filename = os.path.join(out , '_'.join([metric,scen,'plot']) + '.pdf')
+        filename = os.path.join(out , '_'.join([metric,scen,'plot']) + '.png')
         plt.savefig( filename )
         plt.close()
 
