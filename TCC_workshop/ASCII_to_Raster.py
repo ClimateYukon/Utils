@@ -1,3 +1,4 @@
+#quick and dirty script to convert a bunch of ASCII file to raster
 import rasterio
 import pandas as pd
 import glob
