@@ -10,10 +10,10 @@ import numpy as np
 
 rcParams[ 'xtick.direction' ] = 'out'
 rcParams[ 'ytick.direction' ] = 'out'
-rcParams[ 'xtick.labelsize' ] = 'X-large'
-rcParams[ 'ytick.labelsize' ] = 'X-large'
-rcParams[ 'figure.titlesize' ] = 'X-large'
-rcParams[ 'axes.titlesize' ] = 'large'
+rcParams[ 'xtick.labelsize' ] = 'XX-large'
+rcParams[ 'ytick.labelsize' ] = 'XX-large'
+rcParams[ 'figure.titlesize' ] = 'XX-large'
+rcParams[ 'axes.titlesize' ] = 'XX-large'
 rcParams[ 'axes.spines.top' ] = 'False'
 rcParams[ 'axes.spines.right' ] = 'True'
 rcParams[ 'savefig.dpi' ] = 1000
@@ -31,13 +31,13 @@ def fahrenheit2celsius(temp):
     return (temp * 1.8) + 32
 
 
-def convert_ax_c_to_celsius(ax_f):
+def convert_ax_f_to_celsius(ax):
     """
     Update second axis according with first axis.
     """
-    y1, y2 = ax_f.get_ylim()
-    ax_c.set_ylim(fahrenheit2celsius(y1), fahrenheit2celsius(y2))
-    ax_c.figure.canvas.draw()
+    y1, y2 = ax.get_ylim()
+    ax_f.set_ylim(fahrenheit2celsius(y1), fahrenheit2celsius(y2))
+    ax_f.figure.canvas.draw()
     
 for scen in scenarios :
     for metric in metrics :
@@ -66,35 +66,36 @@ for scen in scenarios :
         #https://stackoverflow.com/questions/43149703/adding-a-second-y-axis-related-to-the-first-y-axis
         #and https://matplotlib.org/examples/lines_bars_and_markers/barh_demo.html
 
-        fig, ax_f = plt.subplots()
-        ax_c = ax_f.twinx()
+        fig, ax = plt.subplots()
+        ax_f = ax.twinx()
         decade = ['2010s','2020s','2030s','2040s','2050s','2060s','2070s','2080s','2090s']
         y_pos = np.arange(len(decade))\
         
         # automatically update ylim of ax2 when ylim of ax1 changes.
-        ax_f.callbacks.connect("ylim_changed", convert_ax_c_to_celsius)
-        ax_f.bar(y_pos,value)
+        ax.callbacks.connect("ylim_changed", convert_ax_f_to_celsius)
+        ax.bar(y_pos,value)
 
         #labels
         if metric == 'MAGT':
-            ax_f.set_ylabel( 'Ground Temperature at 1m Depth ($^\circ$C)',fontsize=15 )
-            ax_c.set_ylabel( 'Ground Temperature at 1m Depth ($^\circ$F)',fontsize=15 )
+            ax.set_ylabel( 'Ground Temperature at 1m Depth ($^\circ$C)',fontsize=25 )
+            ax_f.set_ylabel( 'Ground Temperature at 1m Depth ($^\circ$F)',fontsize=25 )
         elif metric == 'MAGST':
-            ax_f.set_ylabel( 'Ground Surface Temperature ($^\circ$C)',fontsize=15 )
-            ax_c.set_ylabel( 'Ground Surface Temperature ($^\circ$F)',fontsize=15 )
+            ax.set_ylabel( 'Ground Surface Temperature ($^\circ$C)',fontsize=25 )
+            ax_f.set_ylabel( 'Ground Surface Temperature ($^\circ$F)',fontsize=25 )
 
         #set tick lavel for x
-        ax_f.set_xticks(y_pos)
-        ax_f.set_xticklabels(decade)
+        ax.set_xticks(y_pos)
+        ax.set_xticklabels(decade)
 
         #freezing line
-        ax_f.axhline(y=0)
+        ax.axhline(y=0)
 
         #Get the upper value for the range to make the reading easier
-        ymin, ymax = ax_f.get_ylim()
-        ax_f.set_ylim(ymin,math.ceil(ymax))
-
-        plt.show()
+        ymin, ymax = ax.get_ylim()
+        ax.set_ylim(ymin,math.ceil(ymax))
+        ax.yaxis.labelpad = 20
+        ax_f.yaxis.labelpad = 25
+        # plt.show()
         filename = os.path.join(out , '_'.join([metric,scen,'plot']) + '.png')
         plt.savefig( filename )
         plt.close()
