@@ -3,10 +3,10 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
-import os , math
+import os 
 import rasterstats
 import glob
-import numpy as np
+
 
 rcParams[ 'xtick.direction' ] = 'out'
 rcParams[ 'ytick.direction' ] = 'out'
@@ -15,90 +15,61 @@ rcParams[ 'ytick.labelsize' ] = 'XX-large'
 rcParams[ 'figure.titlesize' ] = 'XX-large'
 rcParams[ 'axes.titlesize' ] = 'XX-large'
 rcParams[ 'axes.spines.top' ] = 'False'
-rcParams[ 'axes.spines.right' ] = 'True'
+rcParams[ 'axes.spines.right' ] = 'False'
 rcParams[ 'savefig.dpi' ] = 1000
 rcParams[ 'figure.figsize'] = 12 , 8
 
-path = '/workspace/Shared/Users/jschroder/Yukon-Flats_workshop/Permafrost/Source'
-scenarios = ['2013_AK_Can_2km_5model_a1b','2013_AK_Can_2km_5model_a2']
+
+
+pth_YK = '/workspace/Shared/Users/jschroder/Yukon-Flats_workshop/LOFS_YK-FLATS/'
 shp = '/workspace/Shared/Users/jschroder/Yukon-Flats_workshop/shp/Yukon_flats.shp'
-metrics = ['MAGST','MAGT']
+scenarios = ["rcp45","rcp60","rcp85"]
 
-def fahrenheit2celsius(temp):
-    """
-    Returns temperature in Celsius.
-    """
-    return (temp * 1.8) + 32
-
-
-def convert_ax_f_to_celsius(ax):
-    """
-    Update second axis according with first axis.
-    """
-    y1, y2 = ax.get_ylim()
-    ax_f.set_ylim(fahrenheit2celsius(y1), fahrenheit2celsius(y2))
-    ax_f.figure.canvas.draw()
-    
 for scen in scenarios :
-    for metric in metrics :
-        
-        out = '/workspace/Shared/Users/jschroder/Yukon-Flats_workshop/Permafrost/Plots'
-        
-        if not os.path.exists(os.path.join(out)):
-            os.makedirs(os.path.join(out))
+    if not os.path.exists(os.path.join(pth_YK,"Plots")):
+        os.makedirs(os.path.join(pth_YK,'Plots'))
+    files = glob.glob(os.path.join(pth_YK,scen,'*.tif'))
+    files.sort()
+    value = [rasterstats.zonal_stats(shp,f,stats='mean')[0]['mean'] for f in files]
 
-        _ls = glob.glob(os.path.join(path ,scen , '*{}*'.format(metric)))
-        _ls.sort
-        #for local testing
-        # value = [-3.0035198272033425,
-        #  -2.98708008808435,
-        #  -2.8410754967595486,
-        #  -2.3157551012435436,
-        #  -2.1108880502187715,
-        #  -1.4119575430963582,
-        #  -0.6610001603776688,
-        #  0.2984456538165773,
-        #  0.9133571209741093]
-         
-        value = [rasterstats.zonal_stats(shp,f,stats='mean')[0]['mean'] for f in _ls[1:]]
-                
-        #double axes trick from :
-        #https://stackoverflow.com/questions/43149703/adding-a-second-y-axis-related-to-the-first-y-axis
-        #and https://matplotlib.org/examples/lines_bars_and_markers/barh_demo.html
+    #for local using rcp85
+    # value = [212.07856038424845,
+    # 208.03556272000526,
+    # 206.4579399282824,
+    # 202.2881863341777,
+    # 196.8376484521499,
+    # 193.11402441030364,
+    # 189.8872915090305,
+    # 184.48195545613055,
+    # 181.71750501694245]
 
-        fig, ax = plt.subplots()
-        ax_f = ax.twinx()
-        decade = ['2010s','2020s','2030s','2040s','2050s','2060s','2070s','2080s','2090s']
-        y_pos = np.arange(len(decade))\
-        
-        # automatically update ylim of ax2 when ylim of ax1 changes.
-        ax.callbacks.connect("ylim_changed", convert_ax_f_to_celsius)
-        ax.bar(y_pos,value)
+    df = pd.DataFrame(value,index = ['2010s','2020s','2030s','2040s','2050s','2060s','2070s','2080s','2090s'])
 
-        #labels
-        if metric == 'MAGT':
-            ax.set_ylabel( 'Ground Temperature at 1m Depth ($^\circ$C)',fontsize=25 )
-            ax_f.set_ylabel( 'Ground Temperature at 1m Depth ($^\circ$F)',fontsize=25 )
-        elif metric == 'MAGST':
-            ax.set_ylabel( 'Ground Surface Temperature ($^\circ$C)',fontsize=25 )
-            ax_f.set_ylabel( 'Ground Surface Temperature ($^\circ$F)',fontsize=25 )
+    df.columns = ["LOFS"]
+    ax = df.plot(kind='bar', legend=False, color='#7256f0')
 
-        #set tick lavel for x
-        ax.set_xticks(y_pos)
-        ax.set_xticklabels(decade)
+    #stolen from http://robertmitchellv.com/blog-bar-chart-annotations-pandas-mpl.html                                                       
+    totals = []
 
-        #freezing line
-        ax.axhline(y=0)
+    # find the values and append to list
+    for i in ax.patches:
+     totals.append(i.get_height())
 
-        #Get the upper value for the range to make the reading easier
-        ymin, ymax = ax.get_ylim()
-        ax.set_ylim(ymin,math.ceil(ymax))
-        ax.yaxis.labelpad = 20
-        ax_f.yaxis.labelpad = 25
-        # plt.show()
-        filename = os.path.join(out , '_'.join([metric,scen,'plot']) + '.png')
-        plt.savefig( filename )
-        plt.close()
+    # set individual bar lables using above list
+    total = sum(totals)
 
+    # set individual bar lables using above list
+    for i in ax.patches:
+     # get_x pulls left or right; get_height pushes up or down
+        ax.text(i.get_x()+.05, i.get_height()-8, \
+             str(round(i.get_height())),
+                 color='black',fontsize=16)
+    plt.xticks(rotation=0)
+    ax.yaxis.labelpad = 20
+    plt.ylabel('Length of Frozen Season (Days)',fontsize=25)
+    # plt.title('Length of Frozen Season in the Yukon Flats Area,\n  CMIP5 - 5 Model Average - {}'.format(scen.upper()))
+    # plt.show()
 
- 
+    filename = os.path.join(pth_YK,"Plots", '_'.join(['lofs',scen,'plot','no_title']) + '.png')
+    plt.savefig( filename )
+    plt.close()
