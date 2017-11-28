@@ -19,7 +19,7 @@ cd ~/src
 wget https://pypi.python.org/packages/source/v/virtualenv/virtualenv-15.1.0.tar.gz --no-check-certificate
 tar -zxvf virtualenv-15.1.0.tar.gz
 cd virtualenv-15.1.0/
-~/.localpython/bin/python setup.py install
+~/.localpython/bin/python3 setup.py install
 ​
 #3) Create a virtualenv using your local python
 cd ~
