@@ -27,4 +27,4 @@ cd ~
 ​
 #4) Activate the environment
 ​
-source venv2/bin/activate
+source dod/bin/activate
