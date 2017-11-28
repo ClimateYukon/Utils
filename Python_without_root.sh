@@ -10,13 +10,14 @@ cd Python-3.6.3
 
 ​
 make clean
-./configure --prefix=/home/UA/jschroder/.localpython --enable-shared
+./configure --enable-shared --prefix=/home/UA/jschroder/.localpython 
 make
 make install
 ​
 #2) Install virtualenv
 cd ~/src
-wget https://pypi.python.org/packages/source/v/virtualenv/virtualenv-15.1.0.tar.gz --no-check-certificate
+wget https://pypi.python.org/packages/d4/0c/9840c08189e030873387a73b90ada981885010dd9aea134d6de30cd24cb8/virtualenv-15.1.0.tar.gz --no-check-certificate
+
 tar -zxvf virtualenv-15.1.0.tar.gz
 cd virtualenv-15.1.0/
 ~/.localpython/bin/python3 setup.py install
