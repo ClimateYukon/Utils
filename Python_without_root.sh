@@ -1,4 +1,5 @@
 rm -r ~/src
+rm -r ~/dod
 rm -r ~/.localpython -f
 mkdir ~/src
 mkdir ~/.localpython
@@ -8,9 +9,8 @@ tar xvfJ Python-3.6.3.tar.xz
 cd Python-3.6.3
 
 make clean
-
-./configure --prefix=/home/UA/jschroder/.localpython 
-export LD_LIBRARY_PATH=/home/UA/jschroder/.localpython/lib/ 
+export LD_LIBRARY_PATH=/home/UA/jschroder/.localpython/lib/
+./configure --prefix=/home/UA/jschroder/.localpython --enable-shared --with-YYY-includes=/home/UA/jschroder/.localpython/lib/
 make
 make install
 
@@ -28,8 +28,7 @@ cd ~
 
 source dod/bin/activate
 
-
-
+pip install ipython rasterio numpy geopandas
 
 
 
